@@ -1,6 +1,15 @@
 import solana
-
+pip install celery
 client = solana.Client("https://testnet.solana.com")
 
 balance = client.get_balance("address")
 print(balance)
+from celery import Celery
+
+app = Celery('tasks', broker='pyamqp://guest@localhost//')
+
+@app.task
+def send_transaction(to, amount):
+    solana.transfer(to, amount)
+send_transaction.apply_async(('address',10))
+celery -A tasks worker --loglevel=info
