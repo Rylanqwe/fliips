@@ -5,6 +5,11 @@
   <link rel="stylesheet" type="text/css" href="styles.css">
   <script src="script.js"></script>
   <script src="path/to/phantom.js"></script>
+let phantom = new Phantom();
+phantom.getAddress().then(address => console.log(address));
+phantom.getBalance().then(balance => console.log(balance));
+let tx = {to: "address", amount: 10, fee: 0.1};
+phantom.transfer(tx).then(console.log);
 
 </head>
 <body>
